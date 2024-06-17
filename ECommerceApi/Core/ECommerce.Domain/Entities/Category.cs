@@ -26,6 +26,6 @@ namespace ECommerce.Domain.Entities
         public int Priority { get; set; }
 
         public ICollection<Detail> Details { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<CategoryProduct> CategoryProducts { get; set; }
     }
 }

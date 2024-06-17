@@ -12,6 +12,7 @@ namespace ECommerce.Application.Interfaces.Repositories
         Task AddRangeAsync(IList<T> entities);
         void Update(T entity);  
         void Delete(T entity);
+        void DeleteRange(IList<T> entities);
 
     }
 }

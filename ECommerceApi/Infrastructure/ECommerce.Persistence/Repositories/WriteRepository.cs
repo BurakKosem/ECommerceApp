@@ -31,6 +31,10 @@ namespace ECommerce.Persistence.Repositories
             Table.Remove(entity);
         }
 
+        public void DeleteRange(IList<T> entities)
+        {
+            Table.RemoveRange(entities);
+        }
         public void Update(T entity)
         {
             Table.Update(entity);

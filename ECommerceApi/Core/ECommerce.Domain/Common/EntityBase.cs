@@ -8,7 +8,7 @@ namespace ECommerce.Domain.Common
 {
     public class EntityBase : IEntityBase
     {
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public int Id { get; set; }
 
     }

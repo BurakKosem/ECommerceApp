@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Domain.Entities
 {
-    public class Brand :EntityBase
+    public class Brand : EntityBase
     {
         public Brand()
         {

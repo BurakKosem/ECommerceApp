@@ -22,21 +22,6 @@ namespace ECommerce.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CategoryProduct", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CategoriesId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CategoryProduct");
-                });
-
             modelBuilder.Entity("ECommerce.Domain.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -81,6 +66,27 @@ namespace ECommerce.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Entities.CategoryProduct", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CategoryProducts");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Detail", b =>
@@ -147,19 +153,23 @@ namespace ECommerce.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
+            modelBuilder.Entity("ECommerce.Domain.Entities.CategoryProduct", b =>
                 {
-                    b.HasOne("ECommerce.Domain.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
+                    b.HasOne("ECommerce.Domain.Entities.Category", "Category")
+                        .WithMany("CategoryProducts")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Domain.Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
+                    b.HasOne("ECommerce.Domain.Entities.Product", "Product")
+                        .WithMany("CategoryProducts")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Detail", b =>
@@ -186,7 +196,14 @@ namespace ECommerce.Persistence.Migrations
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Category", b =>
                 {
+                    b.Navigation("CategoryProducts");
+
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("CategoryProducts");
                 });
 #pragma warning restore 612, 618
         }
