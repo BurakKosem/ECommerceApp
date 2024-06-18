@@ -1,5 +1,6 @@
 using ECommerce.Persistence;
 using ECommerce.Application;
+using ECommerce.Application.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.ExceptionMiddlewareConfigureHandler();
 app.UseAuthorization();
 
 app.MapControllers();

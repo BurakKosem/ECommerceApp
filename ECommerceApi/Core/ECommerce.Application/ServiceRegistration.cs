@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ECommerce.Application.Exceptions;
+using ECommerce.Application.Validations;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +19,13 @@ namespace ECommerce.Application
             var assembly = Assembly.GetExecutingAssembly();
 
             services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
+
+            services.AddTransient<ExceptionMiddleware>();
+
+            services.AddValidatorsFromAssembly(assembly);
+            ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr-Tr");
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationConfiguration<,>));
+
         }
     }
 }
