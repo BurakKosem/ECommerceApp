@@ -1,15 +1,12 @@
 ﻿using ECommerce.Domain.Entities;
+using ECommerce.Domain.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Persistence.Contexts
 {
-    public class PostgreDbContext : DbContext
+    public class PostgreDbContext : IdentityDbContext<User>
     {
         public PostgreDbContext()
         {
@@ -28,6 +25,10 @@ namespace ECommerce.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().Property(u => u.Initials).HasMaxLength(5);
+            modelBuilder.HasDefaultSchema("identity");
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
